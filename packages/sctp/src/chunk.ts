@@ -515,7 +515,7 @@ export function parsePacket(data: Buffer): [number, number, number, Chunk[]] {
     data,
   );
 
-  const checkSum = data.readUInt32LE(8);
+  const checkSum = data.readUInt32BE(8);
 
   const expect = crc32c(
     Buffer.concat([
@@ -561,7 +561,7 @@ export function serializePacket(
     Buffer.concat([header, Buffer.from("\x00\x00\x00\x00"), body]),
   );
   const checkSumBuf = Buffer.alloc(4);
-  checkSumBuf.writeUInt32LE(checksum, 0);
+  checkSumBuf.writeUInt32BE(checksum, 0);
 
   const packet = Buffer.concat([header, checkSumBuf, body]);
 
